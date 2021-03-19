@@ -6,12 +6,10 @@ import StyledInput from "./StyledInput"
 const sleep = ms => new Promise(r => setTimeout(r, ms))
 const isRandomlyRejected = () => (Math.random() > 0.5 ? true : false)
 
-const nameErrorMessage = "*Name should only contain letters and spaces"
-
 const validationSchema = Yup.object({
     name: Yup.string()
         .trim()
-        .matches(/^[a-zA-Z\s]*$/, nameErrorMessage)
+        .matches(/^([^0-9]*)$/, "*Name should not have a number")
         .required("*Required"),
     email: Yup.string()
         .email("*Oops! Email doesn't look right")
