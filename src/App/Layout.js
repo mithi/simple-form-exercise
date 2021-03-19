@@ -6,9 +6,12 @@ const Layout = ({ mainContent, headerContent, footerContent }) => {
                 flexDirection: "column",
                 justifyContent: "center",
                 height: "100vh",
+                textAlign: "center",
             }}
         >
-            <header style={{ fontSize: "20px", margin: "15px" }}>
+            <header
+                style={{ fontSize: "20px", margin: "15px", textAlign: "left" }}
+            >
                 {headerContent}
             </header>
             <main
