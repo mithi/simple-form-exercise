@@ -14,7 +14,7 @@ const Layout = ({ mainContent, headerContent, footerContent }) => {
                     fontSize: "20px",
                     marginLeft: "20px",
                     marginTop: "20px",
-                    marginBottom: "15x",
+                    marginBottom: "10px",
                     textAlign: "left",
                 }}
             >
@@ -35,7 +35,7 @@ const Layout = ({ mainContent, headerContent, footerContent }) => {
             <footer
                 style={{
                     textAlign: "center",
-                    marginTop: "0px",
+                    marginTop: "5px",
                     marginBottom: "20px",
                 }}
             >
