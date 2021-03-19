@@ -1,13 +1,58 @@
+:root {
+    --transparent-grey: rgba(200, 200, 200, 0.5);
+    --off-white: #f8f8f8;
+    --blue: #3498db;
+}
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #f8f8f8;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
+}
+
+input {
+    margin: 5px 0px;
+    font-size: 18px;
+    padding: 10px;
+    border: 1px solid var(--transparent-grey);
+    border-radius: 8px;
+    background-color: var(--off-white);
+}
+
+button {
+    background-color: var(--blue);
+    color: var(--off-white);
+    margin: 15px 0px;
+    font-size: 18px;
+    padding: 10px;
+    border: 1px solid var(--transparent-grey);
+    border-radius: 8px;
+    min-width: 80px;
+}
+
+button:disabled {
+    background-color: var(--off-white);
+    color: var(--transparent-grey);
+}
+
+button:focus,
+input:focus {
+    outline-color: var(--blue);
+    outline-width: 1px;
+}
+
+hr {
+    margin-left: 10px;
+    margin-right: 10px;
+    border-top: 1px solid var(--transparent-grey);
+    border-bottom-width: 0px;
 }
