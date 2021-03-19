@@ -26,7 +26,7 @@ const ExitPopup = ({ close }) => {
         <div style={{ textAlign: "center" }}>
             <h1>Thank you!</h1>
             <p>Please keep an eye for your first class ticket on your email</p>
-            <button onClick={close}>Ok</button>
+            <button onClick={close}>OK</button>
         </div>
     )
 }
