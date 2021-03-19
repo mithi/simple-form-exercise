@@ -21,7 +21,7 @@ const StyledInput = ({ label, ...props }) => {
                 style={inputContainer}
                 aria-label={label}
             />
-            <div style={{ height: "15px" }}>{errorMessage}</div>
+            <div style={{ height: "25px" }}>{errorMessage}</div>
         </div>
     )
 }

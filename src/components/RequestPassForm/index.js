@@ -26,7 +26,7 @@ const ExitPopup = ({ close }) => {
         <div style={{ textAlign: "center" }}>
             <h1>Thank you!</h1>
             <p>Please keep an eye for your first class ticket on your email</p>
-            <button onClick={close}>ok</button>
+            <button onClick={close}>Ok</button>
         </div>
     )
 }
@@ -48,7 +48,7 @@ const form = ({ isSubmitting }) => {
                 placeholder="Confirm Email"
             />
             <button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Requesting..." : "Submit"}
+                {isSubmitting ? "Requesting..." : "Send"}
             </button>
         </Form>
     )
@@ -63,16 +63,17 @@ const RequestPassForm = ({ close }) => {
     }
 
     const errorMessage = requestFailed && (
-        <div> Something failed form the server. Try again.</div>
+        <div> Something failed from the server. Try again.</div>
     )
 
     return (
         <div style={{ textAlign: "center" }}>
-            <h1> Request a Pass</h1>
+            <h1> Request a pass</h1>
             <Formik
                 initialValues={{ email: "", name: "", confirmEmail: "" }}
                 validationSchema={validationSchema}
                 onSubmit={async _values => {
+                    setRequestFailed(false)
                     await sleep(3000)
                     isRandomlyRejected()
                         ? setRequestFailed(true)

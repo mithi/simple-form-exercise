@@ -15,6 +15,7 @@ function RequestPassModal() {
                 aria-label="Request a Pass Modal"
                 isOpen={showDialog}
                 onDismiss={close}
+                style={{ minWidth: "275px" }}
             >
                 <RequestPassForm close={close} />
             </Dialog>
@@ -32,8 +33,8 @@ const App = () => {
 
     const mainContent = (
         <div style={{ width: "500px" }}>
-            <h1>Lorem Ipsum dolor sit amet consectetur adipiscing</h1>
-            <div>Get your front row sneak peak with us!</div>
+            <h1>Lorem Ipsum dolor sit amet, consectetur adipiscing</h1>
+            <div>Get a front row sneak peek with us!</div>
             <RequestPassModal />
         </div>
     )
