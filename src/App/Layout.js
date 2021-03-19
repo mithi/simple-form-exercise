@@ -10,10 +10,17 @@ const Layout = ({ mainContent, headerContent, footerContent }) => {
             }}
         >
             <header
-                style={{ fontSize: "20px", margin: "15px", textAlign: "left" }}
+                style={{
+                    fontSize: "20px",
+                    marginLeft: "20px",
+                    marginTop: "20px",
+                    marginBottom: "15x",
+                    textAlign: "left",
+                }}
             >
                 {headerContent}
             </header>
+            <hr />
             <main
                 style={{
                     flexGrow: "1",
@@ -24,7 +31,14 @@ const Layout = ({ mainContent, headerContent, footerContent }) => {
             >
                 {mainContent}
             </main>
-            <footer style={{ textAlign: "center", margin: "15px" }}>
+            <hr />
+            <footer
+                style={{
+                    textAlign: "center",
+                    marginTop: "0px",
+                    marginBottom: "20px",
+                }}
+            >
                 {footerContent}
             </footer>
         </div>
