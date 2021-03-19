@@ -1,8 +1,10 @@
-import { render, screen } from '@testing-library/react';
-import App from '.';
+import { render, screen } from "@testing-library/react"
+import App from "."
 
-test('Renders hello world app', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/hello world/i);
-  expect(linkElement).toBeInTheDocument();
-});
+test("Renders lorem ipsum text", () => {
+    render(<App />)
+    const bannerMessageNode = screen.getByText(
+        /Lorem Ipsum dolor sit amet consectetur adipiscing/i
+    )
+    expect(bannerMessageNode).toBeInTheDocument()
+})
