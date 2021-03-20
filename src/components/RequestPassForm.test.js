@@ -5,11 +5,8 @@ import RequestPassForm from "./RequestPassForm"
 
 /*
 
-TEST: no number on input field
 
 type text without a number in name input field, no error
-type text with a number in name input field show error (no number)
-go back and type nothing show error (required)
 
 TEST:
 
@@ -74,17 +71,35 @@ describe("RequestPassForm", () => {
     test("Returning nothing on name input field will result an error", async () => {
         const errorMessage = "*Required"
         render(requestPassForm)
-        const nameInputField = screen.getByRole("textbox", { name: /name/i })
-        userEvent.type(nameInputField, "{enter}")
+        const inputField = screen.getByRole("textbox", { name: /name/i })
+        userEvent.type(inputField, "{enter}")
 
         await waitFor(() =>
             expect(screen.getAllByText(errorMessage)).toBeTruthy()
         )
     })
-    /*test("Test", async () => {})*/
-    /*test("Test", async () => {})*/
-    /*test("Test", async () => {})*/
-    /*test("Test", async () => {})*/
-    /*test("Test", async () => {})*/
-    /*test("Test", async () => {})*/
+
+    test("Returning nothing on email input field will result an error", async () => {
+        const errorMessage = "*Required"
+        render(requestPassForm)
+        const inputField = screen.getByRole("textbox", { name: "Email" })
+        userEvent.type(inputField, "{enter}")
+
+        await waitFor(() =>
+            expect(screen.getAllByText(errorMessage)).toBeTruthy()
+        )
+    })
+
+    test("Returning nothing on confirm email input field will result an error", async () => {
+        const errorMessage = "*Required"
+        render(requestPassForm)
+        const inputField = screen.getByRole("textbox", {
+            name: /Confirm Email/i,
+        })
+        userEvent.type(inputField, "{enter}")
+
+        await waitFor(() =>
+            expect(screen.getAllByText(errorMessage)).toBeTruthy()
+        )
+    })
 })
