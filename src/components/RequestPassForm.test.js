@@ -11,8 +11,6 @@ type text without a number in name input field, no error
 TEST:
 
 in the email input field,
-after typing invalid email format and then blur, it will show the error
-after typing blank,  it will show error (required)
 after typing with valid email format, no error
 
 
@@ -100,6 +98,18 @@ describe("RequestPassForm", () => {
 
         await waitFor(() =>
             expect(screen.getAllByText(errorMessage)).toBeTruthy()
+        )
+    })
+
+    test("Returning an invalid email formant on the email input field will result an error", async () => {
+        const invalidEmail = "@.com"
+        const errorMessage = "*Oops! Email doesn't look right"
+        render(requestPassForm)
+        const inputField = screen.getByRole("textbox", { name: "Email" })
+        userEvent.type(inputField, `${invalidEmail}{enter}`)
+
+        await waitFor(() =>
+            expect(screen.getByText(errorMessage)).toBeInTheDocument()
         )
     })
 })
