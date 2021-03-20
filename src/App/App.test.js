@@ -4,7 +4,7 @@ import {
     //    waitFor,
     //    waitForElementToBeRemoved,
 } from "@testing-library/react"
-//import userEvent from "@testing-library/user-event"
+import userEvent from "@testing-library/user-event"
 import App from "../App"
 //import { willRandomlyReject, sleep } from "../hooks/utils"
 //jest.mock("../hooks/utils")
@@ -14,15 +14,6 @@ TEST: Entering the modal
 
 click request a pass
 
-1. should be on page:
-- Header request a pass
-- button: send, not disabled
-- input with name: name
-- input with name: email
-- input with name: confirmEmail
-each input should have value=""
-each input has appropriate placeholder and aria-label
-- input with name is focused
 
 TEST: exiting the modal
 click request a pass
@@ -65,5 +56,32 @@ describe("App", () => {
         expect(screen.getByRole("contentinfo")).toHaveTextContent(
             "ABC Group. All rights reserved."
         )
+    })
+
+    test("Clicking the button will open the modal with the expected html elements", () => {
+        render(<App />)
+
+        const button = screen.getByRole("button", { name: /request a pass/i })
+        userEvent.click(button)
+
+        expect(
+            screen.getByRole("heading", { name: /request a pass/i })
+        ).toBeInTheDocument()
+
+        const nameInputField = screen.getByRole("textbox", { name: /name/i })
+        expect(nameInputField).toBeInTheDocument()
+
+        const emailInputField = screen.getByRole("textbox", { name: "Email" })
+        expect(emailInputField).toBeInTheDocument()
+
+        const confirmEmailInputField = screen.getByRole("textbox", {
+            name: /Confirm Email/i,
+        })
+
+        expect(confirmEmailInputField).toBeInTheDocument()
+
+        const submitButton = screen.getByRole("button", { name: /send/i })
+        expect(submitButton).toBeInTheDocument()
+        expect(submitButton).not.toBeDisabled()
     })
 })
