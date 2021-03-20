@@ -1,10 +1,5 @@
-import {
-    render,
-    screen,
-    //    waitFor,
-    //    waitForElementToBeRemoved,
-} from "@testing-library/react"
-//import userEvent from "@testing-library/user-event"
+import { render, screen, waitFor } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 
 import RequestPassForm from "./RequestPassForm"
 
@@ -42,7 +37,7 @@ const close = jest.fn()
 const requestPassForm = <RequestPassForm {...{ close }} />
 
 describe("RequestPassForm", () => {
-    test("has the expected elements (title, input fields, submit button) to be rendered", async () => {
+    test("Has the expected elements (title, input fields, submit button) to be rendered", () => {
         render(requestPassForm)
 
         const title = screen.getByText(/request a pass/i)
@@ -63,5 +58,33 @@ describe("RequestPassForm", () => {
         expect(submitButton).toBeInTheDocument()
         expect(submitButton).not.toBeDisabled()
     })
+
+    test("Typing a number in the name input field will display an error", async () => {
+        const textWithNumber = "aa1"
+        const errorMessage = "*Name should not have a number"
+        render(requestPassForm)
+        const nameInputField = screen.getByRole("textbox", { name: /name/i })
+        userEvent.type(nameInputField, `${textWithNumber}{enter}`)
+
+        await waitFor(() =>
+            expect(screen.getByText(errorMessage)).toBeInTheDocument()
+        )
+    })
+
+    test("Returning nothing on name input field will result an error", async () => {
+        const errorMessage = "*Required"
+        render(requestPassForm)
+        const nameInputField = screen.getByRole("textbox", { name: /name/i })
+        userEvent.type(nameInputField, "{enter}")
+
+        await waitFor(() =>
+            expect(screen.getAllByText(errorMessage)).toBeTruthy()
+        )
+    })
+    /*test("Test", async () => {})*/
+    /*test("Test", async () => {})*/
+    /*test("Test", async () => {})*/
+    /*test("Test", async () => {})*/
+    /*test("Test", async () => {})*/
     /*test("Test", async () => {})*/
 })
