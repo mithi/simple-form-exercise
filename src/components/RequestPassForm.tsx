@@ -1,9 +1,9 @@
-import { useState } from "react"
+import { useState, FC } from "react"
 import { Formik, Form } from "formik"
 import * as Yup from "yup"
 import StyledInput from "./StyledInput"
 
-const sleep = ms => new Promise(r => setTimeout(r, ms))
+const sleep = (ms: number) => new Promise(r => setTimeout(r, ms))
 const isRandomlyRejected = () => (Math.random() > 0.5 ? true : false)
 
 const validationSchema = Yup.object({
@@ -19,7 +19,11 @@ const validationSchema = Yup.object({
         .required("*Required"),
 })
 
-const ExitPopup = ({ close }) => {
+type closeProp = {
+    close: () => void
+}
+
+const ExitPopup: FC<closeProp> = ({ close }): JSX.Element => {
     return (
         <div style={{ textAlign: "center" }}>
             <h1>Thank you!</h1>
@@ -29,18 +33,18 @@ const ExitPopup = ({ close }) => {
     )
 }
 
-const form = ({ isSubmitting }) => {
+const form = ({ isSubmitting = false }) => {
     return (
         <Form>
-            <StyledInput label="Name" name="name" placeholder="Name" />
+            <StyledInput aria-label="Name" name="name" placeholder="Name" />
             <StyledInput
-                label="Email"
+                aria-label="Email"
                 name="email"
                 type="email"
                 placeholder="Email"
             />
             <StyledInput
-                label="Confirm email"
+                aria-label="Confirm email"
                 name="confirmEmail"
                 type="email"
                 placeholder="Confirm Email"
@@ -52,7 +56,7 @@ const form = ({ isSubmitting }) => {
     )
 }
 
-const RequestPassForm = ({ close }) => {
+const RequestPassForm: FC<closeProp> = ({ close }) => {
     const [formSubmitted, setFormSubmitted] = useState(false)
     const [requestFailed, setRequestFailed] = useState(false)
 

@@ -1,10 +1,10 @@
 import "@reach/dialog/styles.css"
-import { useState } from "react"
+import { useState, FC } from "react"
 import { Dialog } from "@reach/dialog"
 import Layout from "./Layout"
 import RequestPassForm from "../components/RequestPassForm"
 
-function RequestPassModal() {
+const RequestPassModal: FC = (): JSX.Element => {
     const [showDialog, setShowDialog] = useState(false)
     const open = () => setShowDialog(true)
     const close = () => setShowDialog(false)
@@ -23,7 +23,7 @@ function RequestPassModal() {
     )
 }
 
-const App = () => {
+const App: FC = (): JSX.Element => {
     const footerContent = (
         <>
             <div> Start your day with {"☕"}</div>
@@ -40,7 +40,10 @@ const App = () => {
     )
 
     return (
-        <Layout headerContent="ABC Group" {...{ footerContent, mainContent }} />
+        <Layout
+            headerContent={<>ABC Group</>}
+            {...{ footerContent, mainContent }}
+        />
     )
 }
 

@@ -1,4 +1,12 @@
-const Layout = ({ mainContent, headerContent, footerContent }) => {
+import { FC } from "react"
+
+type Props = {
+    mainContent: JSX.Element
+    headerContent: JSX.Element
+    footerContent: JSX.Element
+}
+
+const Layout: FC<Props> = ({ mainContent, headerContent, footerContent }) => {
     return (
         <div
             style={{

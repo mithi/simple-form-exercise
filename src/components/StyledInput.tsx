@@ -1,13 +1,15 @@
-import { useField } from "formik"
+import { CSSProperties, FC } from "react"
+import { FieldHookConfig, useField } from "formik"
 
-const inputContainer = {
+const inputContainer: CSSProperties = {
     display: "flex",
     flexDirection: "column",
     textAlign: "left",
 }
 
-const StyledInput = ({ label, ...props }) => {
+const StyledInput: FC<FieldHookConfig<string>> = (props): JSX.Element => {
     const [field, meta] = useField(props)
+    const { name, type, placeholder } = props
 
     const errorMessage = meta.touched && meta.error && (
         <div style={{ fontSize: "12px", color: "red" }}>{meta.error}</div>
@@ -17,9 +19,9 @@ const StyledInput = ({ label, ...props }) => {
         <div style={inputContainer}>
             <input
                 {...field}
-                {...props}
+                {...{ name, type, placeholder }}
+                aria-label={props["aria-label"]}
                 style={inputContainer}
-                aria-label={label}
             />
             <div style={{ height: "25px" }}>{errorMessage}</div>
         </div>
