@@ -2,9 +2,7 @@ import { useState, FC } from "react"
 import { Formik, Form } from "formik"
 import * as Yup from "yup"
 import StyledInput from "./StyledInput"
-
-const sleep = (ms: number) => new Promise(r => setTimeout(r, ms))
-const isRandomlyRejected = () => (Math.random() > 0.5 ? true : false)
+import { sleep, isRandomlyRejected } from "../utils"
 
 const validationSchema = Yup.object({
     name: Yup.string()
@@ -90,3 +88,4 @@ const RequestPassForm: FC<closeProp> = ({ close }) => {
 }
 
 export default RequestPassForm
+export { sleep, isRandomlyRejected }
