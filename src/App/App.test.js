@@ -34,28 +34,54 @@ clicking the submit buton with
 - email does not match will do the same
 */
 
+const landingPageExpect = () => {
+    expect(screen.getByRole("banner")).toHaveTextContent("ABC Group")
+    expect(screen.getByRole("heading")).toHaveTextContent(
+        "Lorem ipsum dolor sit amet, consectetur adipiscing"
+    )
+
+    expect(screen.getByRole("main")).toHaveTextContent(
+        "Get a front row sneak peek with us!"
+    )
+
+    const button = screen.getByRole("button", { name: /request a pass/i })
+    expect(button).toBeInTheDocument()
+    expect(button).not.toBeDisabled()
+
+    expect(screen.getByRole("contentinfo")).toHaveTextContent(
+        "Start your day with ☕"
+    )
+    expect(screen.getByRole("contentinfo")).toHaveTextContent(
+        "ABC Group. All rights reserved."
+    )
+}
+
+const modalExpect = () => {
+    expect(
+        screen.getByRole("heading", { name: /request a pass/i })
+    ).toBeInTheDocument()
+
+    const nameInputField = screen.getByRole("textbox", { name: /name/i })
+    expect(nameInputField).toBeInTheDocument()
+
+    const emailInputField = screen.getByRole("textbox", { name: "Email" })
+    expect(emailInputField).toBeInTheDocument()
+
+    const confirmEmailInputField = screen.getByRole("textbox", {
+        name: /Confirm Email/i,
+    })
+
+    expect(confirmEmailInputField).toBeInTheDocument()
+
+    const submitButton = screen.getByRole("button", { name: /send/i })
+    expect(submitButton).toBeInTheDocument()
+    expect(submitButton).not.toBeDisabled()
+}
+
 describe("App", () => {
     test("On page load expected elements are displayed", () => {
         render(<App />)
-        expect(screen.getByRole("banner")).toHaveTextContent("ABC Group")
-        expect(screen.getByRole("heading")).toHaveTextContent(
-            "Lorem ipsum dolor sit amet, consectetur adipiscing"
-        )
-
-        expect(screen.getByRole("main")).toHaveTextContent(
-            "Get a front row sneak peek with us!"
-        )
-
-        const button = screen.getByRole("button", { name: /request a pass/i })
-        expect(button).toBeInTheDocument()
-        expect(button).not.toBeDisabled()
-
-        expect(screen.getByRole("contentinfo")).toHaveTextContent(
-            "Start your day with ☕"
-        )
-        expect(screen.getByRole("contentinfo")).toHaveTextContent(
-            "ABC Group. All rights reserved."
-        )
+        landingPageExpect()
     })
 
     test("Clicking the button will open the modal with the expected html elements", () => {
@@ -64,24 +90,6 @@ describe("App", () => {
         const button = screen.getByRole("button", { name: /request a pass/i })
         userEvent.click(button)
 
-        expect(
-            screen.getByRole("heading", { name: /request a pass/i })
-        ).toBeInTheDocument()
-
-        const nameInputField = screen.getByRole("textbox", { name: /name/i })
-        expect(nameInputField).toBeInTheDocument()
-
-        const emailInputField = screen.getByRole("textbox", { name: "Email" })
-        expect(emailInputField).toBeInTheDocument()
-
-        const confirmEmailInputField = screen.getByRole("textbox", {
-            name: /Confirm Email/i,
-        })
-
-        expect(confirmEmailInputField).toBeInTheDocument()
-
-        const submitButton = screen.getByRole("button", { name: /send/i })
-        expect(submitButton).toBeInTheDocument()
-        expect(submitButton).not.toBeDisabled()
+        modalExpect()
     })
 })
