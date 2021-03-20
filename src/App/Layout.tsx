@@ -23,7 +23,7 @@ const Layout = ({ mainContent, headerContent, footerContent }) => {
             <hr />
             <main
                 style={{
-                    flexGrow: "1",
+                    flexGrow: 1,
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
