@@ -4,13 +4,6 @@ import App from "../App"
 import { isRandomlyRejected, sleep } from "../utils"
 jest.mock("../utils")
 
-/*
-
-
-- When error, the modal will show the same components (button, input fields, header) and show text that there is a problem with the server
-
-*/
-
 const landingPageExpect = () => {
     expect(screen.getByRole("banner")).toHaveTextContent("ABC Group")
     expect(screen.getByRole("heading")).toHaveTextContent(
@@ -138,5 +131,37 @@ describe("App", () => {
         ).not.toBeInTheDocument()
 
         landingPageExpect()
+    })
+
+    test("A submission process with server error should work as expected'", async () => {
+        isRandomlyRejected.mockReturnValue(true)
+        sleep.mockReturnValue(null)
+        render(<App />)
+        const correctName = "Mithi"
+        const correctEmail = "mithi.sevilla@gmail.com"
+
+        const button = screen.getByRole("button", { name: /request a pass/i })
+        userEvent.click(button)
+
+        const nameInputField = screen.getByRole("textbox", { name: /name/i })
+        const emailInputField = screen.getByRole("textbox", { name: "Email" })
+        const confirmEmailInputField = screen.getByRole("textbox", {
+            name: /Confirm Email/i,
+        })
+
+        userEvent.type(nameInputField, correctName)
+        userEvent.type(emailInputField, correctEmail)
+        userEvent.type(confirmEmailInputField, correctEmail)
+
+        const sendButton = screen.getByRole("button", { name: /send/i })
+        userEvent.click(sendButton)
+        expect(sendButton).toBeDisabled()
+        await waitFor(() => expect(sendButton).toHaveTextContent(/requesting/i))
+
+        await waitFor(() =>
+            expect(
+                screen.getByText("Something failed from the server. Try again.")
+            ).toBeInTheDocument()
+        )
     })
 })
