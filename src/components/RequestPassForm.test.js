@@ -1,32 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-
 import RequestPassForm from "./RequestPassForm"
-
-/*
-
-
-type text without a number in name input field, no error
-
-TEST:
-
-in the email input field,
-after typing with valid email format, no error
-
-
-TEST:
-in the email field type a valid email
-in the confirmEmail field, type non matching email, error will show
-in the confirmEmail field, type matching email, no error
-(required)
-
-TEST:
-clicking the submit button with atleast one field blank, the modal will still be opened and show error)
-clicking the submit buton with
-- name has number will do the same
-- invalid email will do the same
-- email does not match will do the same
-*/
 
 const close = jest.fn()
 const requestPassForm = <RequestPassForm {...{ close }} />
@@ -66,7 +40,7 @@ describe("RequestPassForm", () => {
         )
     })
 
-    test("Returning nothing on name input field will result an error", async () => {
+    test("Typing and entering nothing on name input field will result an error", async () => {
         const errorMessage = "*Required"
         render(requestPassForm)
         const inputField = screen.getByRole("textbox", { name: /name/i })
@@ -77,7 +51,7 @@ describe("RequestPassForm", () => {
         )
     })
 
-    test("Returning nothing on email input field will result an error", async () => {
+    test("Typing and entering nothing on email input field will result an error", async () => {
         const errorMessage = "*Required"
         render(requestPassForm)
         const inputField = screen.getByRole("textbox", { name: "Email" })
@@ -88,7 +62,7 @@ describe("RequestPassForm", () => {
         )
     })
 
-    test("Returning nothing on confirm email input field will result an error", async () => {
+    test("Typing and entering nothing on confirm email input field will result an error", async () => {
         const errorMessage = "*Required"
         render(requestPassForm)
         const inputField = screen.getByRole("textbox", {
@@ -101,12 +75,32 @@ describe("RequestPassForm", () => {
         )
     })
 
-    test("Returning an invalid email formant on the email input field will result an error", async () => {
+    test("Typing an invalid email formant on the email input field will result an error", async () => {
         const invalidEmail = "@.com"
         const errorMessage = "*Oops! Email doesn't look right"
         render(requestPassForm)
         const inputField = screen.getByRole("textbox", { name: "Email" })
         userEvent.type(inputField, `${invalidEmail}{enter}`)
+
+        await waitFor(() =>
+            expect(screen.getByText(errorMessage)).toBeInTheDocument()
+        )
+    })
+
+    test("Email mismatch will result an error", async () => {
+        const errorMessage = "*Email does not match"
+        const email = "x@x.com"
+        const confirmEmail = "x@y.com"
+
+        render(requestPassForm)
+
+        const emailField = screen.getByRole("textbox", { name: "Email" })
+        const confirmEmailField = screen.getByRole("textbox", {
+            name: /Confirm Email/i,
+        })
+
+        userEvent.type(emailField, `${email}{enter}`)
+        userEvent.type(confirmEmailField, `${confirmEmail}{enter}`)
 
         await waitFor(() =>
             expect(screen.getByText(errorMessage)).toBeInTheDocument()
