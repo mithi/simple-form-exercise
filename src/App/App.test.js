@@ -1,32 +1,14 @@
-import {
-    render,
-    screen,
-    //    waitFor,
-    //    waitForElementToBeRemoved,
-} from "@testing-library/react"
+import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import App from "../App"
-//import { isRandomlyRejected, sleep } from "../utils"
-//jest.mock("../utils")
+import { isRandomlyRejected, sleep } from "../utils"
+jest.mock("../utils")
 
 /*
-TEST: exiting the modal
-click request a pass
-clicking outside the modal (document body)
-will exit the modal (we wont see the elements in (1))
 
 
-TEST
-- clicking the submit button with all correct field values will trigger the "requesting.." text on the button and be disabled
-- When success the modal will change to the exit popup view (which has an OK button etc), clicking the OK button will close the pop up
 - When error, the modal will show the same components (button, input fields, header) and show text that there is a problem with the server
 
-TEST:
-clicking the submit button with atleast one field blank, the modal will still be opened and show error)
-clicking the submit buton with
-- name has number will do the same
-- invalid email will do the same
-- email does not match will do the same
 */
 
 const landingPageExpect = () => {
@@ -113,5 +95,48 @@ describe("App", () => {
         expect(
             screen.queryByRole("dialog", { name: "Request a Pass Modal" })
         ).not.toBeInTheDocument()
+    })
+
+    test("A successful submission process should work as expected'", async () => {
+        isRandomlyRejected.mockReturnValue(false)
+        sleep.mockReturnValue(null)
+        render(<App />)
+        const correctName = "Mithi"
+        const correctEmail = "mithi.sevilla@gmail.com"
+
+        const button = screen.getByRole("button", { name: /request a pass/i })
+        userEvent.click(button)
+
+        const nameInputField = screen.getByRole("textbox", { name: /name/i })
+        const emailInputField = screen.getByRole("textbox", { name: "Email" })
+        const confirmEmailInputField = screen.getByRole("textbox", {
+            name: /Confirm Email/i,
+        })
+
+        userEvent.type(nameInputField, correctName)
+        userEvent.type(emailInputField, correctEmail)
+        userEvent.type(confirmEmailInputField, correctEmail)
+
+        const sendButton = screen.getByRole("button", { name: /send/i })
+        userEvent.click(sendButton)
+        await waitFor(() => expect(sendButton).toHaveTextContent(/requesting/i))
+        expect(
+            screen.getByRole("heading", { name: /thank you/i })
+        ).toBeInTheDocument()
+
+        expect(
+            screen.getByText(
+                /Please keep an eye for your first class ticket on your email/i
+            )
+        ).toBeInTheDocument()
+
+        expect(screen.getByRole("button", { name: /ok/i })).toBeInTheDocument()
+
+        userEvent.click(screen.getByRole("button", { name: /ok/i }))
+        expect(
+            screen.queryByRole("dialog", { name: "Request a Pass Modal" })
+        ).not.toBeInTheDocument()
+
+        landingPageExpect()
     })
 })
